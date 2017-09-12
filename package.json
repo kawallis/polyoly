@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.0",
     "express-mongoose-generator-es6": "^3.0.0",
     "mongoose": "^4.11.5",
     "morgan": "^1.8.2"
