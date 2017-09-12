@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="newtask-component">
+  <template>
+
+    <style>
+      #newtaskcontainer {
+        height: 5vh;
+        width: 17vw;
+        background-color: none;
+        border: 3px solid lightgray;
+        border-radius: 2px;
+        display: flex;
+        padding: 2vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 8px;
+        line-height: 2px;
+        font-family: OpenSansSemiBold;
+      }
+
+      .clicked {
+        border: 2px solid purple;
+      }
+
+      #newtaskcontainer h3 {
+        color: lightgray;
+      }
+
+      .clicked {
+        border: 2px solid purple;
+      }
+
+      #plus {
+        color: lightgray;
+        border: solid 2px lightgray;
+        border-radius: 100%;
+        padding: 9px;
+        margin: auto;
+      }
+
+      @media only screen and (min-width: 768px) {
+        #newcardcontainer {
+          height: 12vh;
+          width: 17vw;
+        }
+      }
+    </style>
+  <div id="yoyo">
+    <div id="newtaskcontainer" on-click="handleClick">
+      <h3 id="plus">+</h3>
+      <h3>Create New Task</h3>
+    </div>
+  </div>
+  </template>
+
+  <script>
+    class NewTaskComponent extends Polymer.Element {
+      static get is() { return 'newtask-component'; }
+
+      static get properties() {
+        return {
+
+        };
+      }
+
+      handleClick() {
+        // TODO ADD CLICK EVENT TO MAKE FORM APPEAR
+        let elementExists = document.getElementsByTagName("form-component");
+        let newcard = this.$.yoyo
+        if (elementExists.length === 0) {
+          let form = document.createElement('form-component');
+          newcard.appendChild(form);
+        }
+      }
+    }
+
+    window.customElements.define(NewTaskComponent.is, NewTaskComponent);
+  </script>
+</dom-module>

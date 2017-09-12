@@ -1,0 +1,68 @@
+<dom-module id="card-component">
+  <template>
+
+    <style>
+      #cardContainer {
+        width: 80vw;
+        background-color: white;
+        border-radius: 2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        padding: 2vh;
+        margin: 8px;
+        line-height: 2px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+      }
+
+      #cardContainer:hover {
+          box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      }
+
+      #cardContainer p {
+        color: grey;
+        line-height: 3vh;
+      }
+
+      h4 {
+        font-family: OpenSansBold;
+      }
+
+      @media only screen and (min-width: 768px) {
+        #cardContainer {
+          width: 25vw;
+        }
+      }
+    </style>
+
+    <div id="cardContainer">
+      <h2>[[title]]</h2>
+      <p>[[description]]</p>
+      <h4>Total Members: [[members.length]]</h4>
+    </div>
+  </template>
+
+  <script>
+    class CardComponent extends Polymer.Element {
+      static get is() { return 'card-component'; }
+
+      static get properties() {
+        return {
+          title: {
+            type: String,
+            value: 'Moonshot'
+          },
+          description: {
+            type: String,
+            value: 'We Winning'
+          },
+          members: []
+        };
+      }
+
+    }
+
+    window.customElements.define(CardComponent.is, CardComponent);
+  </script>
+</dom-module>

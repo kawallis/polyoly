@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/sortable-list/sortable-list.html">
+
+<dom-module id="column-component">
+    <template>
+        <iron-ajax auto="" headers="{&quot;Accept&quot;: &quot;*/*&quot;}" url="http://localhost:3000/api/members/{{mainthing}}" handle-as="json" last-response="{{ajaxResponse}}">
+        </iron-ajax>
+        <style>
+            :host {
+                display: flex;
+                justify-content: center;
+                width: 23vw;
+                border-left:  dashed 2px lightgrey;
+            }
+            #columnContainer {
+                height: 80vh;
+                width: 20vw;
+                margin-top: 2vh;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            h2 {
+                color: purple;
+                background-color: white;
+                width: 80%;
+                text-align: center;
+                padding: 3vh;
+                border-radius: 2px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+                font-family: OpenSansSemiBold;
+            }
+        </style>
+
+        <div id="columnContainer">
+            <h2>[[name]]</h2>
+            <sortable-list on-sort-finish="_onSortFinish" dragging="{{dragging}}">
+                <template is="dom-repeat" items="[[ajaxResponse.tasks]]">
+                    <task-component title="[[item.title]]" description="[[item.description]]">
+                </task-component></template>
+            </sortable-list>
+            <newtask-component></newtask-component>
+        </div>
+    </template>
+
+    <script>
+        class ColumnComponent extends Polymer.Element {
+            static get is() { return 'column-component'; }
+            static get properties() {
+                return {
+                    name: {
+                        type: String,
+                        value: 'John'
+                    },
+                    tasks: []
+                };
+            }
+
+            json(obj) {
+                return JSON.stringify(obj, null, 2);
+            }
+            onSortFinish(event) {
+                const sortedItem = event.detail.target;
+            }
+
+        }
+
+        window.customElements.define(ColumnComponent.is, ColumnComponent);
+    </script>
+</dom-module>

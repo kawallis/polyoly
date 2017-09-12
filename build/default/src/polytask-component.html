@@ -1,0 +1,96 @@
+<link rel="import" href="https://polygit.org/polymer+v2.0.0/shadycss+webcomponents+1.0.0/components/iron-ajax/iron-ajax.html">
+
+<dom-module id="polytask-component">
+  <template>
+    <iron-ajax auto="" id="cardsAjax" headers="{&quot;Accept&quot;: &quot;*/*&quot;}" url="http://localhost:3000/api/projects/all" handle-as="json" last-response="{{ajaxResponse}}">
+    </iron-ajax>
+    <!-- <pre>[[json(ajaxResponse)]]</pre> -->
+
+    <style>
+       :host {
+        display: block;
+        width: 100vw;
+      }
+
+      a {
+        color: black;
+        font-family: OpenSansSemiBold;
+      }
+
+      ;
+      h2 {
+        color: white;
+        background-color: purple;
+        height: 15vh;
+        display: flex;
+        justify-content: left;
+        padding-left: 5vw;
+        align-items: center;
+        margin: 0;
+        font-family: OpenSansBold;
+        font-size: 5vh;
+      }
+
+      #mainContainer {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-color: whitesmoke;
+        min-height: 85vh;
+      }
+
+      iron-selector {
+        width: 100%;
+        display: flex;
+        flex-wrap: inherit;
+      }
+
+
+      @media only screen and (min-width: 768px) {
+        /* For Desktops: */
+        #mainContainer {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          align-content: center;
+          align-self: center;
+          padding-left: 7vw;
+        }
+      }
+    </style>
+
+
+    <h2>[[view]]</h2>
+    <div id="mainContainer">
+      <iron-selector selected="{{projectData.project}}" attr-for-selected="data-page ">
+        <template is="dom-repeat" items="[[ajaxResponse]]" id="cardsContainer">
+          <a href="#/project/[[item._id]]" data-page="project">
+            <card-component title="[[item.title]]" description="[[item.description]]" members="[[item.members]]">
+          </card-component></a>
+        </template>
+        <newcard-component refreshcards="{{}}">
+      </newcard-component></iron-selector>
+    </div>
+  </template>
+
+  <script>
+    class PolytaskComponent extends Polymer.Element {
+      static get is() { return 'polytask-component'; }
+      static get properties() {
+        return {
+          view: {
+            type: String,
+            value: 'Task Management'
+          },
+          
+        };
+      }
+      json(obj) {
+        return JSON.stringify(obj, null, 2);
+      }
+    }
+
+    window.customElements.define(PolytaskComponent.is, PolytaskComponent);
+  </script>
+</dom-module>

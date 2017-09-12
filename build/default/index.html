@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+  <title>polytask</title>
+  <meta name="description" content="polytask description">
+  <!-- See https://goo.gl/OOhYW5 -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="import" href="./bower_components/polymer/polymer-element.html">
+
+  <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="/bower_components/app-router/src/app-router.js"></script>
+  <link rel="import" href="./bower_components/app-route/app-route.html">
+  <link rel="import" href="./bower_components/iron-pages/iron-pages.html">
+  <link rel="import" href="./bower_components/iron-form/iron-form.html">
+  <link rel="import" href="./bower_components/iron-selector/iron-selector.html">
+
+  <link rel="import" href="/src/components/card-component.html">
+  <link rel="import" href="/src/components/newcard-component.html">
+  <link rel="import" href="/src/components/form-component.html">
+  <link rel="import" href="/src/components/column-component.html">
+  <link rel="import" href="/src/components/task-component.html">
+  <link rel="import" href="/src/components/newtask-component.html">
+  <link rel="import" href="/src/components/newcolumn-component.html">
+
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  @font-face {
+    font-family: OpenSansBold;
+    src: url(./fonts/OpenSans-Bold.ttf);
+  }
+
+  @font-face {
+    font-family: OpenSansLight;
+    src: url(./fonts/OpenSans-Light.ttf);
+  }
+
+  @font-face {
+    font-family: OpenSansSemiBold;
+    src: url(./fonts/OpenSans-SemiBold.ttf);
+  }
+
+  @font-face {
+    font-family: OpenSansRegular;
+    src: url(./fonts/OpenSans-Regular.ttf);
+  }
+</style></head>
+
+
+<body>
+  <app-router>
+    <app-route path="/" data="{{data}}" import="./src/polytask-component.html"></app-route>
+    <app-route path="/project/:id" data="{{data}}" import="./src/team-component.html"></app-route>
+  </app-router>
+
+
+</body></html>

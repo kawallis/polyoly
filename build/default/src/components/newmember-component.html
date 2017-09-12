@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="newmember-component">
+  <template>
+
+    <style>
+      :host {
+        display: flex;
+        justify-content: center;
+        width: 23vw;
+        border-left:  dashed 2px lightgrey;
+      }
+      #newmembercontainer {
+        height: 5vh;
+        width: 80%;
+        background-color: none;
+        border: 3px solid lightgray;
+        border-radius: 2px;
+        display: flex;
+        padding: 2vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        line-height: 2px;
+        font-family: OpenSansSemiBold;
+      }
+
+      .clicked {
+        border: 2px solid purple;
+      }
+
+      #newmembercontainer h3 {
+        color: lightgray;
+      }
+
+      .clicked {
+        border: 2px solid purple;
+      }
+
+      #plus {
+        color: lightgray;
+        border: solid 2px lightgray;
+        border-radius: 100%;
+        padding: 9px;
+        margin: auto;
+      }
+
+      @media only screen and (min-width: 768px) {
+        /* For mobile phones: */
+        #newcardcontainer {
+          height: 12vh;
+          width: 24vw;
+        }
+      }
+    </style>
+
+    <div id="newmembercontainer" on-click="handleClick">
+      <h3 id="plus">+</h3>
+      <h3>New Member</h3>
+    </div>
+  </template>
+
+  <script>
+    class NewMemberComponent extends Polymer.Element {
+      static get is() { return 'newmember-component'; }
+
+      static get properties() {
+        return {
+
+        };
+      }
+
+      handleClick() {
+        // TODO GET THIS PUPPY POSTING
+      }
+
+    }
+
+    window.customElements.define(NewMemberComponent.is, NewMemberComponent);
+  </script>
+</dom-module>

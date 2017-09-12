@@ -1,0 +1,329 @@
+<link rel="import" href="../../bower_components/iron-dropdown/iron-dropdown.html">
+
+<dom-module id="form-component">
+  <template>
+    <iron-ajax auto="" headers="{&quot;Accept&quot;: &quot;*/*&quot;}" url="http://localhost:3000/api/members" handle-as="json" last-response="{{ajaxResponse}}">
+    </iron-ajax>
+    <iron-ajax id="sendForm" method="post" headers="{&quot;Accept&quot;: &quot;*/*&quot;}" url="http://localhost:3000/api/projects" body="[[post]]" handle-as="json" content-type="application/json" on-response="handleResponse">
+    </iron-ajax>
+    <style>
+       :host {
+        height: 80vh;
+        width: 80vw;
+        background-color: white;
+        border: 2px solid whitesmoke;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 3;
+        left: 186px;
+        top: -200px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
+
+      #headerContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        height: 7vh;
+        width: 100%;
+        border-bottom: 4px solid whitesmoke;
+      }
+
+      #formTitle {
+        margin-left: 2vh;
+        font-family: OpenSansBold;
+        font-size: 1.6vh;
+      }
+
+      #xbutton {
+        color: purple;
+        font-family: OpenSansBold;
+        margin-right: 2vh;
+      }
+
+      form {
+        width: 80%;
+        line-height: 2vh;
+        padding: 2vh;
+        height: 100%
+      }
+
+      input {
+        border: 2px solid lightgrey;
+        border-radius: 1px;
+        color: lightgray;
+        width: 100%;
+        height: 4vh;
+        font-family: OpenSansLight;
+        padding-left: 5px;
+        font-size: 1.5vh;
+        margin-bottom: 2vh;
+      }
+
+      input:focus {
+        border-color: purple;
+        outline: 0 none;
+      }
+
+      #texArea {
+        border: 2px solid lightgrey;
+        border-radius: 1px;
+        color: lightgray;
+        width: 100%;
+        height: 10vh;
+        font-family: OpenSansLight;
+        padding-left: 5px;
+        font-size: 1.5vh;
+        resize: none;
+        margin-bottom: 1vh;
+      }
+
+      #textArea:focus {
+        border-color: purple;
+        outline: 0 none;
+      }
+
+      #buttonContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        border-top: 2px solid whitesmoke;
+        width: 100%;
+      }
+
+      #buttonOne {
+        color: purple;
+        border: none;
+        background-color: white;
+        margin: 2vh;
+        height: 5vh;
+        width: 20vw;
+        border-radius: 50px;
+      }
+
+      #buttonTwo {
+        color: white;
+        background-color: purple;
+        border: none;
+        margin: 2vh;
+        height: 5vh;
+        width: 20vw;
+        border-radius: 50px;
+      }
+
+
+      #dropDownButton {
+        border-radius: 1px;
+        height: 4vh;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        border: 2px solid lightgrey;
+        padding-left: 5px;
+        width: 100%;
+      }
+
+      #texArea:focus {
+        border-color: purple;
+        outline: 0 none;
+      }
+
+      .dropdown {
+        background-color: white;
+        padding: 20px 3vw;
+      }
+
+      .dropdown:hover {
+        background-color: purple;
+        color: white;
+      }
+
+      #showMenu {
+        margin-top: 32vh;
+        border-radius: 5px;
+        box-shadow: 0px 2px 5px #ccc;
+        height: 20vh;
+        overflow:auto; 
+        overflow-y:scroll;
+      }
+
+
+      p {
+        margin: 0 auto;
+        padding-left: 13px;
+        font-family: OpenSansLight;
+        color: lightgrey;
+      }
+
+      h5 {
+        font-family: OpenSansBold;
+        font-size: 1.4vh;
+        margin: 0;
+      }
+
+      h6 {
+        font-family: OpenSansLight;
+        font-size: 1.5vh;
+      }
+
+      @media only screen and (min-width: 768px) {
+        /* For mobile phones: */
+         :host {
+          height: 100%;
+          width: 25vw;
+          max-width: 33vw;
+        }
+
+        #buttonOne {
+          color: purple;
+          background-color: white;
+          border: none;
+          margin: 2vh;
+          height: 5vh;
+          width: 7vw;
+          border-radius: 50px;
+        }
+
+        #buttonTwo {
+          color: white;
+          background-color: purple;
+          border: none;
+          margin: 2vh;
+          height: 5vh;
+          width: 7vw;
+          border-radius: 50px;
+        }
+      }
+    </style>
+
+    <div id="headerContainer">
+      <h5 id="formTitle">Create Project</h5>
+      <h5 id="xbutton" on-click="close">X</h5>
+    </div>
+    <form id="form1">
+      <template is="dom-if" if="{{domif}}">
+        <p>[[message]]</p>
+      </template>
+      <h5>Title</h5>
+      <input type="text" name="title" placeholder="Project Title.." value="[[title]]" on-input="update">
+      <h5>Description</h5>
+      <textarea type="text" id="texArea" name="description" placeholder="Project Description.." value="[[description]]" on-input="update"></textarea> 
+      <h5>Members</h5>
+
+      <!-- TODO DO UPDATE THIS TO MATCH TASK -->
+      <div on-click="show" id="dropDownButton" style="background-color: [[statusColor]]">
+        <h6><template is="dom-repeat" items="[[members]]">{{item.name}} </template></h6>
+      </div>
+      <iron-dropdown id="showMenu" vertical-align="top">
+        <template is="dom-repeat" items="[[ajaxResponse]]">
+          <div class="dropdown" slot="dropdown-content" on-click="addMember" value="[[item]]">[[item.name]]</div>
+        </template> 
+      </iron-dropdown>
+    </form>
+    <div id="buttonContainer">
+      <button id="buttonOne" type="Cancel" on-click="close">Cancel</button>
+      <button id="buttonTwo" value="Create" on-click="formHandler">Create</button>
+    </div>
+  </template>
+
+  <script>
+    class FormComponent extends Polymer.Element {
+      static get is() { return 'form-component'; }
+
+      static get properties() {
+        return {
+          title: {
+            type: String,
+            value: ''
+          },
+          description: {
+            type: String,
+            value: ''
+          },
+          members: {
+            type: Array, 
+            value:[{name:'Select', id: 'none'}]
+          },
+          message:  {
+            type: String,
+            value: ''
+          },
+          domif: {
+            type: Boolean,
+            value: false
+          },
+          post: {
+            type: String, 
+            value: ''
+          },
+          parentFunction: function() {
+            console.log('ayyo');
+            this.fire('addCard', {message: 'fired'});
+          }
+        };
+      }
+
+      formHandler() {
+        if(this.title === ''){
+          this.message = 'Please add a title to your project';
+          this.domif = true;
+        } else if (this.description === ''){
+          this.message = 'Please add a description to your project';
+          this.domif = true;
+        } else if (this.members[0].name === 'Select'){
+          this.message = 'Please add some members to your project';
+          this.domif = true;
+        } else {
+          let ids = this.members.map(member => member.id);
+          
+          let post = {
+            title: this.title,
+            description: this.description,
+            members: ids
+          };
+
+          this.post = JSON.stringify(post);
+          this.$.sendForm.generateRequest();
+        }
+      }
+
+      handleResponse () {
+        let card = document.createElement('card-component');
+        Polymer.dom(PolytaskComponent).querySelector('newcard-component')
+        Polymer.dom(PolytaskComponent).insertBefore(card, NewCardComponent);
+      }
+      addMember(e) {
+        if(this.members[0].name === 'Select'){
+          let newArr = this.members.slice();
+          newArr[0] = {name: e.target.value.name, id: e.target.value._id};
+          this.members = newArr;
+         
+        }else {
+          let newArr = this.members.slice();
+          newArr.push({name: e.target.value.name, id: e.target.value._id});
+          this.members = newArr;
+        }
+      }
+      update(e) {
+        this[e.target.name] = e.target.value;
+      }
+      show() {
+        this.$.showMenu.open();
+      }
+
+      close() {
+       console.log(Polymer.dom(PolytaskComponent).querySelector('#cardsAjax'));
+      }
+
+    }
+
+    window.customElements.define(FormComponent.is, FormComponent);
+  </script>
+</dom-module>
+

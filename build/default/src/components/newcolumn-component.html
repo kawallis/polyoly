@@ -1,0 +1,53 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/sortable-list/sortable-list.html">
+
+<dom-module id="newcolumn-component">
+    <template>
+        <style>
+            :host {
+                display: flex;
+                justify-content: center;
+                width: 23vw;
+                border-left:  dashed 2px lightgrey;
+            }
+            #newcolumnContainer {
+                height: 80vh;
+                width: 20vw;
+                margin-top: 2vh;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            h2 {
+                color: lightgrey;
+                background-color: white;
+                width: 80%;
+                text-align: center;
+                padding: 3vh;
+                border-radius: 2px;
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+                font-family: OpenSansSemiBold;
+            }
+        </style>
+
+        <div id="newcolumnContainer">
+            <h2>Add New Member</h2>
+        </div>
+    </template>
+
+    <script>
+        class NewColumnComponent extends Polymer.Element {
+            static get is() { return 'newcolumn-component'; }
+            static get properties() {
+                return {
+                    
+                };
+            }
+
+        }
+
+        window.customElements.define(NewColumnComponent.is, NewColumnComponent);
+    </script>
+</dom-module>

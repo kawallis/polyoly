@@ -1,0 +1,120 @@
+<dom-module id="task-component">
+    <template>
+        <style>
+            #taskContainer {
+                margin-top: 2vh;    
+                padding-left: 1vh;
+                width: 20vw;
+                display: flex;
+                flex-direction: column;
+                height: 10vh;
+                background-color: white;
+                border-radius: 2px;                
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+            }
+
+            h5 {
+                font-size: 1.6vh;
+                font-family: OpenSansSemiBold;
+            }
+
+            p {
+                font-size: 1.4vh;
+                font-family: OpenSansRegular;
+            }
+
+            #dropDownButton {
+                border-radius: 10px;
+                height: 2vh;
+                width: 6vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                margin-left: 2vh;
+                font-family: OpenSansLight;
+            }
+
+            #textContainer {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .dropdown {
+                background-color: white;
+                line-height: 15px;
+                padding: 20px 3vw;
+            }
+
+            .dropdown:hover {
+                background-color: purple;
+                color: white;
+            }
+
+            #showMenu{
+                margin-top: 3vh;
+                margin-left: 10vh;
+                border-radius: 5px;
+                box-shadow: 0px 2px 5px #ccc;
+            }
+            
+        </style>
+
+        <div id="taskContainer" style="border-left: solid 6px [[statusColor]]">
+            <div id="textContainer">
+                <h5>[[title]]</h5>
+                <div on-click="show" id="dropDownButton" style="background-color: [[statusColor]]">
+                    <h6>[[status]]</h6>
+                </div>
+                <iron-dropdown id="showMenu" vertical-align="top">
+                    <div class="dropdown" slot="dropdown-content" on-click="changeStatus" color="rgb(0, 180, 140)">Done</div>
+                    <div class="dropdown" slot="dropdown-content" on-click="changeStatus" color="rgb(1800, 0, 140)">On Hold</div>
+                    <div class="dropdown" slot="dropdown-content" on-click="changeStatus" color="rgb(255, 165, 0)">In Progress</div>
+                    <div class="dropdown" slot="dropdown-content" on-click="changeStatus" color="rgb(255, 165, 140">Sent</div>
+                    <div class="dropdown" slot="dropdown-content" on-click="changeStatus" color="rgb(0, 180, 0)">Schedule</div>
+                </iron-dropdown>
+            </div>
+            <p>[[description]]</p>
+        </div>
+    </template>
+
+    <script>
+        class TaskComponent extends Polymer.Element {
+            static get is() { return 'task-component'; }
+            static get properties() {
+                return {
+                    title: {
+                        type: String,
+                        value: 'task one'
+                    },
+                    description: {
+                        type: String,
+                        value: 'lets go get it'
+                    },
+                    status: {
+                        type: String,
+                        value: 'Done'
+                    },
+                    statusColor: {
+                        type: String,
+                        value: 'rgb(0, 180, 140)'
+                    }
+                };
+            }
+
+            show() {
+                this.$.showMenu.open();
+            }
+
+            changeStatus(e) {
+                this.$.showMenu.close();
+                this.status = e.target.textContent;
+                this.statusColor = e.target.getAttribute('color');
+            }
+        }
+
+        window.customElements.define(TaskComponent.is, TaskComponent);
+    </script>
+</dom-module>

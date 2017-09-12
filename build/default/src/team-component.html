@@ -1,0 +1,65 @@
+<link rel="import" href="https://polygit.org/polymer+v2.0.0/shadycss+webcomponents+1.0.0/components/iron-ajax/iron-ajax.html">
+
+<dom-module id="team-component">
+  <template>
+    <iron-ajax auto="" url="http://localhost:3000/api/projects/[[url]]" handle-as="json" last-response="{{ajaxResponse}}">
+    </iron-ajax>
+
+    <style>
+      #teamContainer {
+        height: 100%;
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        background-color: whitesmoke;
+      }
+
+      h2 {
+        color: white;
+        background-color: purple;
+        height: 15vh;
+        display: flex;
+        justify-content: left;
+        padding-left: 5vw;
+        align-items: center;
+        margin: 0;
+        font-size: 5vh;
+        font-family: OpenSansBold;
+      }
+    </style>
+
+    <h2>[[ajaxResponse.title]]</h2>
+    <div id="teamContainer">
+      <template is="dom-repeat" items="[[ajaxResponse.members]]">
+        <column-component name="[[item.name]]" mainthing="[[item._id]]">
+        <p>[[item._id]]</p>
+      </column-component></template>
+      <newcolumn-component>
+    </newcolumn-component></div>
+  </template>
+
+  <script>
+    class TeamComponent extends Polymer.Element {
+      static get is() { return 'team-component'; }
+      static get properties() {
+        return {
+          url: {
+            type: String,
+            value: function () {
+              return window.location.hash.toString().split('/')[2]
+            }
+          }
+        };
+      }
+      
+      
+      json(obj) {
+        return JSON.stringify(obj, null, 2);
+      }
+    }
+
+    window.customElements.define(TeamComponent.is, TeamComponent);
+  </script>
+</dom-module>
